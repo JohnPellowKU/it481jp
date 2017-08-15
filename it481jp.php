@@ -18,31 +18,39 @@
 	
 	echo "<br>";
 		
-        $stmt = $conn->prepare("SELECT COUNT(CustomerID) FROM customers");
-
-        $stmt->execute();
-        $get_result =$stmt->get_result();
-
-        $row_count= $get_result->num_rows;
-
-        if($row_count>0)
-        {
-
-         print_r($get_result->fetch_assoc());
-
-        }
-	
-	$sql = "SELECT CustomerID, CompanyName, ContactName FROM customers";
+ 	$sql = "SELECT CustomerID, CompanyName, ContactName, ContactTitle, Address, City, Region, PostalCode, Country, Phone, Fax FROM customers";
 	$result = $conn->query($sql);
+	
+	echo "<br>";	
 
 	if ($result->num_rows > 0) {
-    // output data of each row
-    while($row = $result->fetch_assoc()) {
-        echo "<br>" . "Customer ID: " . $row["CustomerID"]. " - Company Name: " . $row["CompanyName"]. " Contact Name: " . $row["ContactName"];
-    }
+	echo "Customer ID // Company Name // Contact Name // Contact Title // Address // City // Region // Postal Code // Country // Phone // Fax";
+	echo "<br>";
+	
+	while($row = $result->fetch_assoc()) {
+		echo "<br>" . $row["CustomerID"]. " // " . $row["CompanyName"]. " // " . $row["ContactName"]
+					. " // " . $row["ContactTitle"]. " // " . $row["Address"]. " // " . $row["City"]
+					. " // " . $row["Region"]. " // " . $row["PostalCode"]. " // " . $row["Country"]
+					. " // " . $row["Phone"]. " // " . $row["Fax"];
+	}
 	} else {
 		echo "0 results";
-		}
+	}
+	
+	echo "<br>";
+	echo "<br>";
+	
+	$stmt = $conn->prepare("SELECT COUNT(CustomerID) FROM customers");
+
+	$stmt->execute();
+    $get_result =$stmt->get_result();
+
+    $row_count= $get_result->num_rows;
+
+    if($row_count>0)
+    {
+        print_r($get_result->fetch_assoc());
+    }
 	mysqli_close($conn);
 ?>
 </body>
